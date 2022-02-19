@@ -11,8 +11,8 @@ import java.awt.image.DataBufferInt;
 
 public class Display extends Canvas implements Runnable {
 
-    public static final int width = 1980;
-    public static final int height = 1080;
+    public static final int WIDTH = 1980;
+    public static final int HEIGHT = 1080;
     public static final String title = "Minekroft...";
 
     private Thread thread;
@@ -23,8 +23,8 @@ public class Display extends Canvas implements Runnable {
     private int[] pixels;
 
     public Display() {
-        screen = new Screen(width, height);
-        img = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
+        screen = new Screen(WIDTH, HEIGHT);
+        img = new BufferedImage(WIDTH, HEIGHT, BufferedImage.TYPE_INT_RGB);
         pixels = ((DataBufferInt)img.getRaster().getDataBuffer()).getData();
     }
 
@@ -68,12 +68,12 @@ public class Display extends Canvas implements Runnable {
 
         screen.render();
 
-        for (int i = 0; i<width*height;i++) {
+        for (int i = 0; i< WIDTH * HEIGHT; i++) {
             pixels[i] = screen.pixels[i];
         }
 
         Graphics g = bs.getDrawGraphics();
-        g.drawImage(img, 0, 0, width, height,null);
+        g.drawImage(img, 0, 0, WIDTH, HEIGHT,null);
         g.dispose();
         bs.show();
 
@@ -88,7 +88,7 @@ public class Display extends Canvas implements Runnable {
         frame.setTitle(title);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setLocationRelativeTo(null);
-        frame.setSize(width,height);
+        frame.setSize(WIDTH, HEIGHT);
         frame.setResizable(false);
         frame.setVisible(true);
 
