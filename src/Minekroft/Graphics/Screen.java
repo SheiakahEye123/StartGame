@@ -24,13 +24,7 @@ public class Screen extends Render {
         for (int i = 0; i < width * height; i++) {
             pixels[i] = 0;
         }
-
-
-        for (int i = 0; i < 50; i++) {
-            int anim = (int) (Math.sin((game.time + i * 2) % 1000.0 / 100) * 100);
-            int anim2 = (int) (Math.cos((game.time + i * 2) % 1000.0 / 100) * 100);
-        }
-        render.floor();
+        render.floor(game);
         draw(render, 0, 0);
     }
 }
