@@ -10,10 +10,12 @@ public class Render3D extends Render{
 
     public void floor(Game game) {
 
-        double forward = game.time/10.0;
-        double right = game.time/10.0;
+
         double floorPosition = 8;
-        double ceilingPosition = 100;
+        double ceilingPosition = 8;
+        double forward = game.controls.z;
+        double right = game.controls.x;
+
         double rotation = game.time / 1000.0;
         double cosine = Math.cos(rotation);
         double sine = Math.sin(rotation);
@@ -30,7 +32,7 @@ public class Render3D extends Render{
             for (int x = 0; x < width; x++) {
                 double depth = (x - width / 2.0) / height;
                 depth *= z;
-                double xx = depth * cosine + z * sine + right;
+                double xx = depth * cosine + z  * sine + right;
                 double yy = z * cosine - depth * sine + forward;
                 int xPix = (int) (xx);
                 int yPix = (int) (yy);
