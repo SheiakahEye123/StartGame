@@ -2,9 +2,13 @@ package Minekroft.Graphics;
 
 import Minekroft.Game;
 
-public class Render3D extends Render{
+public class Render3D extends Render {
+    private double renderDistance = 1000;
+    public double[] zBuffer;
     public Render3D(int width, int height) {
         super(width, height);
+        zBuffer = new double[width * height];
+
     }
 
 
@@ -16,7 +20,7 @@ public class Render3D extends Render{
         double forward = game.controls.z;
         double right = game.controls.x;
 
-        double rotation = game.time / 1000.0;
+        double rotation = game.controls.rotation;
         double cosine = Math.cos(rotation);
         double sine = Math.sin(rotation);
 
@@ -29,15 +33,47 @@ public class Render3D extends Render{
                 z = ceilingPosition / -ceiling;
             }
 
+
             for (int x = 0; x < width; x++) {
                 double depth = (x - width / 2.0) / height;
                 depth *= z;
-                double xx = depth * cosine + z  * sine + right;
+                double xx = depth * cosine + z * sine + right;
                 double yy = z * cosine - depth * sine + forward;
                 int xPix = (int) (xx);
                 int yPix = (int) (yy);
-                pixels[x + y * width] = ((xPix & 15) * 16) | ((yPix & 15) * 16) << 8;
+                zBuffer[width * height] = z;
+                if (depth < 1000) {
+                    pixels[x + y * width] = ((xPix & 15) * 16) | ((yPix & 15) * 16) << 8;
+                }
+                else {
+                    pixels[x + y * width] = 0;
+                }
             }
         }
     }
+    public void renderDistanceLimiter() {
+        for (int i = 0; i < width * height; i++) {
+            int colour = pixels[i];
+            int brightness = (int) (renderDistance / zBuffer[i]);
+
+            if (brightness < 0) {
+                brightness = 0;
+            }
+            if (brightness > 255) {
+                brightness = 255;
+            }
+            int r = (colour >> 16) & 0xff;
+            int g = (colour >> 8) & 0xff;
+            int b = (colour) & 0xff;
+
+            r = r*brightness / 255;
+            b = b*brightness / 255;
+            g = g*brightness / 255;
+
+            pixels[i] = r << 16 | g << 8 | b;
+
+        }
+    }
+
 }
+

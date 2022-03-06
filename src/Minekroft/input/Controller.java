@@ -17,13 +17,13 @@ public class Controller {
             zMove--;
         }
         if (left) {
-            xMove++;
-        }
-        if (right) {
             xMove--;
         }
+        if (right) {
+            xMove++;
+        }
         if (turnLeft) {
-            rotationa += rotationSpeed;
+            rotation += rotationSpeed;
         }
         if (turnRight) {
             rotation -= rotationSpeed;
@@ -37,6 +37,6 @@ public class Controller {
         xa *= 0.1;
         za *= 0.1;
         rotation += rotationa;
-        rotationa *= 0.8;
+        rotationa *= 0.5;
     }
 }

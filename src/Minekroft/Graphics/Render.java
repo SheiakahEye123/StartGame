@@ -21,7 +21,8 @@ public class Render {
             }
             for (int x = 0; x<render.width; x++ ) {
                 int xPix = x + xOffset;
-                if (xPix < 0 || xPix >= Display.WIDTH) {
+
+                if (xPix < 0 || xPix >= Display.WIDTH){
                     continue;
                 }
                 int alpha = render.pixels[x + y * render.width];
